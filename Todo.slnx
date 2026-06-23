@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/Application/" />
+  <Folder Name="/src/Application/">
+    <Project Path="Todo.Application/Todo.Application.csproj" Id="938e5ac0-4b6e-4a2f-a33b-17405a1bd602" />
+  </Folder>
   <Folder Name="/src/Domain/">
     <Project Path="Todo.Domain/Todo.Domain.csproj" Id="e264a312-1f0e-4c9f-8582-261a4def4097" />
   </Folder>

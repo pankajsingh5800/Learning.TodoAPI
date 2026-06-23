@@ -8,7 +8,7 @@ namespace Todo.Infrastructure.Mappers
     {
         public UserMappingExtension()
         {
-            CreateMap<User, UserDomain>();
+            CreateMap<User, UserDomain>().ReverseMap(); //entity <--> domain
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Todo.Infrastructure.Repository
         public async Task AddAsync(TDomain domain)
         {
             var entity = _mapper.Map<TEntity>(domain);
-            await _todoAppDbContext.Set<TEntity>().AddAsync(entity);
+            await _todoAppDbContext.Set<TEntity>().AddAsync(entity); //domain --> entity
         }
 
         public async Task<int> CommitAsync()
@@ -43,7 +43,7 @@ namespace Todo.Infrastructure.Repository
         public async Task<TDomain?> GetByIdAsync(object id)
         {
             var entity = await _todoAppDbContext.Set<TEntity>().FindAsync(id); // id shoul primary key
-            return entity == null ? null : _mapper.Map<TDomain>(entity);
+            return entity == null ? null : _mapper.Map<TDomain>(entity); //entity --> domain
         }
     }
 }
