@@ -1,35 +1,30 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Todo.Application.Contracts;
+﻿using Todo.Application.Contracts;
 using Todo.Application.DTOs.Request;
-using Todo.Domain.DomainEntities;
+using Todo.Application.Mappers;
 using Todo.Domain.RepositoryInterface;
 
 namespace Todo.Application.Implementation
 {
-    public class UserService : IUserService
+    public class UserService(
+              IUserRepository userRepository,
+              IPasswordHasher _passwordHasher) : IUserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IMapper mapper;
 
-        public UserService(IUserRepository userRepository,IMapper mapper)
-        {
-            this.userRepository = userRepository;
-            this.mapper = mapper;
-        }
         public async Task<bool> CreateUserAsync(CreateUserDto userDto)
         {
-            var userDomain = mapper.Map<UserDomain>(userDto);
+            // dto into domain
+            // user password into hashed password
 
-            userDomain.PasswordHash = BCrypt.Net.BCrypt.HashPassword(userDomain.PasswordHash);
+            var userDomain = userDto.ToUserDomain();
+
+            userDomain.PasswordHash = _passwordHasher.Hash(userDto.Password);
 
             await userRepository.AddAsync(userDomain);
 
             var response = await userRepository.CommitAsync();
 
             return response > 0;
+
         }
     }
 }

@@ -20,9 +20,12 @@ namespace Todo.API
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddHealthChecks().AddDbContextCheck<TodoAppDbContext>();
+
             services.AddAutoMapper(typeof(InfraAssemblyMarker).Assembly); //register automapper only at infra layer
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
             return services;
         }
 
@@ -30,6 +33,10 @@ namespace Todo.API
         {
             services.AddAutoMapper(typeof(ApplicationLayerMarker).Assembly); //register automapper only at infra layer
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<ITodoService, TodoService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             return services;
         }
     }
